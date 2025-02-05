@@ -1,39 +1,48 @@
-import express from "express"
-import mongoose from "mongoose";
+import express from "express";
+import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import bookRoute from "./route/book.route.js"
-import userRoute from "./route/user.route.js"
+import bookRoute from "./route/book.route.js";
+import userRoute from "./route/user.route.js";
+
+dotenv.config();  // Load .env variables
 
 const app = express();
 
-//middle ware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-dotenv.config()
+// MongoDB URI (ensure it's correct)
+const URI = process.env.MongoDBURI;  // .env mein aapka URI hona chahiye
 
-// server difine
+// Connect to MongoDB Atlas using native MongoDB driver
+async function connectToMongoDB() {
+  try {
+    const client = await MongoClient.connect(URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      ssl: true,  // Ensure SSL is enabled for Atlas connection
+    });
+    console.log("✅ Connected to MongoDB");
+
+    const db = client.db();  // Access your database
+
+    // Perform other operations with db as needed...
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+  }
+}
+
+connectToMongoDB();  // Calling the function to connect to MongoDB
+
+// Defining routes
+app.use("/book", bookRoute);
+app.use("/user", userRoute);
+
+// Start server
 const PORT = process.env.PORT || 4000;
-const URI = process.env.MongoDBURI;
-
-//connect to mongodb
-mongoose.connect(URI, {
-  useNewUrlParser: true,        // Use the new URL parser
-  useUnifiedTopology: true,     // Use the new topology engine
-  ssl: true,                    // Enabling SSL/TLS
-  tls: true,                    // Enabling TLS
-  serverSelectionTimeoutMS: 5000,   // Timeout for server selection
-  connectTimeoutMS: 10000,      // Timeout for establishing connection
-})
-  .then(() => console.log("✅ Successfully connected to MongoDB"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-//defining routes
-app.use("/book",bookRoute)
-app.use("/user",userRoute)
-
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`)
+  console.log(`Server is listening on port ${PORT}`);
 });

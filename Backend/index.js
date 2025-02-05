@@ -24,8 +24,7 @@ async function connectToMongoDB() {
     const client = await MongoClient.connect(URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      ssl: true,  // Enable SSL
-      sslValidate: true,  // Ensure the SSL certificate is valid
+      ssl: true,  // Enable SSL (this will automatically validate SSL certificates)
     });
     console.log("✅ Connected to MongoDB");
 

@@ -1,10 +1,8 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
+import { MongoClient } from 'mongodb';
 import bookRoute from './route/book.route.js';
-import userRoute from './route/user.route.js';
 
 dotenv.config();
 
@@ -40,8 +38,8 @@ async function connectToMongoDB() {
 connectToMongoDB();  // Call the function to connect to MongoDB
 
 // Routes
-app.use('/book', bookRoute);
-app.use('/user', userRoute);
+app.use('/book', bookRoute);  // Use the book routes
+app.use('/user',userRoute);
 
 // Start server
 app.listen(PORT, () => {

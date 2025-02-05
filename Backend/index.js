@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
 import bookRoute from './route/book.route.js';
+import userRoute from "./route/user.route.js"
 
 dotenv.config();
 

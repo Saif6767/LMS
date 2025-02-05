@@ -20,16 +20,15 @@ const URI = process.env.MongoDBURI;
 
 //connect to mongodb
 mongoose.connect(URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true,                // Enable SSL connection
-  sslValidate: true,        // Enable SSL certificate validation
-  tls: true,                // Enable TLS
-  serverSelectionTimeoutMS: 5000,  // Timeout for server selection
-  connectTimeoutMS: 10000,  // Timeout for establishing a connection
+  useNewUrlParser: true,        // Use the new URL parser
+  useUnifiedTopology: true,     // Use the new topology engine
+  ssl: true,                    // Enabling SSL/TLS
+  tls: true,                    // Enabling TLS
+  serverSelectionTimeoutMS: 5000,   // Timeout for server selection
+  connectTimeoutMS: 10000,      // Timeout for establishing connection
 })
-  .then(() => console.log('✅ Successfully connected to MongoDB'))
-  .catch((err) => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log("✅ Successfully connected to MongoDB"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 //defining routes
 app.use("/book",bookRoute)

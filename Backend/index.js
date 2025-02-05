@@ -22,7 +22,8 @@ const URI = process.env.MongoDBURI;
 try {
   mongoose.connect(URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    ssl: true,
   });
   console.log("connect to mongodb")
 } catch (error) {

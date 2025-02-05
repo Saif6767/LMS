@@ -1,40 +1,39 @@
-import express from "express"
+import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import bookRoute from "./route/book.route.js"
-import userRoute from "./route/user.route.js"
+import bookRoute from "./route/book.route.js";
+import userRoute from "./route/user.route.js";
 
 const app = express();
 
-//middle ware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-dotenv.config()
+dotenv.config();
 
-// server difine
+// Server define
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-//connect to mongodb
-try {
-  mongoose.connect(URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-     tls: true
-  });
-  console.log("connect to mongodb")
-} catch (error) {
-  console.log(error)
+// Connect to MongoDB
+mongoose.connect(URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,                         // Force SSL
+  tlsInsecure: true,                 // Disable certificate validation temporarily (only for testing)
+  tlsAllowInvalidCertificates: true, // Allow invalid certificates (for testing)
+})
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.log("❌ MongoDB connection error:", err));
 
-}
+// Defining routes
+app.use("/book", bookRoute);
+app.use("/user", userRoute);
 
-//defining routes
-app.use("/book",bookRoute)
-app.use("/user",userRoute)
-
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`)
+  console.log(`Server is listening on port ${PORT}`);
 });

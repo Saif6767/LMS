@@ -24,6 +24,7 @@ async function connectToMongoDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       ssl: true,  // Ensure SSL is enabled for Atlas connection
+      tls: true,
     });
     console.log("✅ Connected to MongoDB");
 

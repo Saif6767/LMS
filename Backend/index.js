@@ -1,10 +1,12 @@
-import express from "express";
-import { MongoClient } from "mongodb";  // Import MongoClient from mongodb
-import dotenv from "dotenv";
-import cors from "cors";
+import express from 'express';
+import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
-import bookRoute from "./route/book.route.js";
-import userRoute from "./route/user.route.js";
+import bookRoute from './route/book.route.js';
+import userRoute from './route/user.route.js';
+
+dotenv.config();
 
 const app = express();
 
@@ -12,39 +14,43 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-dotenv.config();
-
-// Server define
+// Server and MongoDB URI
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-// Connect to MongoDB using native MongoDB driver
+// Declare MongoDB connection variables
+let db;
+let client;
+
+// Function to connect to MongoDB
 async function connectToMongoDB() {
   try {
-    const client = await MongoClient.connect(URI, {
+    client = await MongoClient.connect(URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      ssl: true,  // Enable SSL (this will automatically validate SSL certificates)
+      ssl: true,  // Enable SSL
     });
-    console.log("✅ Connected to MongoDB");
-
-    const db = client.db(); // Access your database (default database is passed)
-    // Example of performing database operations:
-    // const books = await db.collection("books").find().toArray();
-
-    // You can pass the db to your route if needed
+    db = client.db();  // Save database instance
+    console.log('✅ Connected to MongoDB');
   } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
+    console.error('❌ MongoDB connection error:', error);
   }
 }
 
-connectToMongoDB(); // Call the function to connect to MongoDB
+connectToMongoDB();  // Call the function to connect to MongoDB
 
-// Defining routes
-app.use("/book", bookRoute);
-app.use("/user", userRoute);
+// Routes
+app.use('/book', bookRoute);
+app.use('/user', userRoute);
 
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('Closing MongoDB connection...');
+  await client.close();
+  process.exit();
 });

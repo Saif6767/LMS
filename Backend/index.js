@@ -22,9 +22,8 @@ const URI = process.env.MongoDBURI;
 mongoose.connect(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  ssl: true,                         // Force SSL
-  tlsInsecure: true,                 // Disable certificate validation temporarily (only for testing)
-  tlsAllowInvalidCertificates: true, // Allow invalid certificates (for testing)
+  ssl: true,  // Enable SSL
+  tlsAllowInvalidCertificates: true,  // Allow Invalid Certs (Only for testing)
 })
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch(err => console.log("❌ MongoDB connection error:", err));

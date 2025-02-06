@@ -10,7 +10,7 @@ function Freebook() {
     useEffect(() => {
         const getBook = async () => {
             try {
-                const res = await axios.get("https://lms-lbh0.onrender.combook");
+                const res = await axios.get("https://lms-lbh0.onrender.com/book");
                 console.log(res.data);
                 setBook(res.data.filter((data) => data.category === "Free"))
             } catch (error) {

@@ -22,7 +22,9 @@ const URI = process.env.MongoDBURI;
 try {
   mongoose.connect(URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    ssl: true,  // Ensure SSL is enabled for Atlas connection
+    tls: true,
   });
   console.log("connect to mongodb")
 } catch (error) {
@@ -37,3 +39,6 @@ app.use("/user",userRoute)
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
 });
+
+
+

@@ -56,7 +56,7 @@ function Signup() {
 
                             <h3 className="font-bold text-lg">Signup</h3>
                             <div className="mt-4 space-y-2">
-                                <label htmlFor="email" className="block">
+                                <label htmlFor="name" className="block">
                                     Name
                                 </label>
                                 <input

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
+import { Link as LinkScroll } from 'react-scroll'; // नाम बदला गया
 import Login from './Login';
-import { useAuth } from '../context/AuthProvider';
 import Logout from './Logout';
+import { useAuth } from '../context/AuthProvider';
+
+
 
 function Navbar() {
     const [authUser, setAuthUser] = useAuth()
@@ -42,21 +45,21 @@ function Navbar() {
     const navItem = (
         <>
             <li>
-                <a href="/">Home</a>
+                <Link to="/">Home</Link>
             </li>
             <li>
-                <a href="/Course">Course</a>
+                <Link to="/Course">Course</Link>
             </li>
             <li>
-                <Link to='Contact'
+                <LinkScroll to='Contact'
                     smooth={true}
                     duration={500}
                     offset={-70}
                     activeClass='active'
-                >Contact</Link>
+                >Contact</LinkScroll>
             </li>
             <li>
-                <a href="/About">About</a>
+                <Link to="/About">About</Link>
             </li>
         </>
     );

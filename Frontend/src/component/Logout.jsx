@@ -8,7 +8,7 @@ function Logout() {
         try {
             setAuthUser({
                 ...authUser,
-                user: null
+                user: null,
             })
             localStorage.removeItem('Users')
             toast.success("Logout successfully");

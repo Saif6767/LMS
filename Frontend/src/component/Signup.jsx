@@ -29,6 +29,7 @@ function Signup() {
                 if (res.data) {
                     toast.success('Signup Successfully');
                     navigate(from, { replace: true });
+                    window.location.reload();
                 }
                 localStorage.setItem("Users", JSON.stringify(res.data));
             })
@@ -56,9 +57,8 @@ function Signup() {
 
                             <h3 className="font-bold text-lg">Signup</h3>
                             <div className="mt-4 space-y-2">
-                                <label htmlFor="name" className="block">
-                                    Name
-                                </label>
+                                <span>Name</span>
+                                <br />
                                 <input
                                     id="name"
                                     type="text"
@@ -71,9 +71,8 @@ function Signup() {
                             </div>
                             {/* Email */}
                             <div className="mt-4 space-y-2">
-                                <label htmlFor="email" className="block">
-                                    Email
-                                </label>
+                                <span>Email</span>
+                                <br />
                                 <input
                                     id="email"
                                     type="email"
@@ -86,9 +85,8 @@ function Signup() {
                             </div>
                             {/* Password */}
                             <div className="mt-4 space-y-2">
-                                <label htmlFor="password" className="block">
-                                    Password
-                                </label>
+                                <label> Password</label>
+                                <br />
                                 <input
                                     id="password"
                                     type="password"
@@ -108,10 +106,9 @@ function Signup() {
                                 </button>
                                 <p className='text-md'>
                                     Have account?{' '}
-                                    <button>
-                                        <span className="underline text-blue-500 cursor-pointer" onClick={() => document.getElementById("my_modal_3").showModal()}>
+                                    <button className="underline text-blue-500 cursor-pointer" onClick={() => document.getElementById("my_modal_3").showModal()}>
                                             Login
-                                        </span>
+                                        
                                     </button>
                                     <Login />
                                 </p>
